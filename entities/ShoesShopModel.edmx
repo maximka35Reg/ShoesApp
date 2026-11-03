@@ -1,0 +1,860 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="Хранилище ShoesShopModel" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Categories">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="category_name" Type="nvarchar" MaxLength="80" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Materials">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name_material" Type="nvarchar" MaxLength="80" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Order_Positions">
+          <Key>
+            <PropertyRef Name="id_order" />
+            <PropertyRef Name="id_product" />
+            <PropertyRef Name="id_size" />
+          </Key>
+          <Property Name="id_order" Type="int" Nullable="false" />
+          <Property Name="id_product" Type="int" Nullable="false" />
+          <Property Name="id_size" Type="int" Nullable="false" />
+          <Property Name="amount" Type="int" Nullable="false" />
+          <Property Name="price_per_unit" Type="decimal" Precision="10" Scale="2" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Orders">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="date_order" Type="datetime" />
+          <Property Name="client" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Productions">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name_production" Type="nvarchar" MaxLength="80" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Products">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="category" Type="int" Nullable="false" />
+          <Property Name="production" Type="int" Nullable="false" />
+          <Property Name="product_name" Type="nvarchar" MaxLength="120" Nullable="false" />
+          <Property Name="product_image" Type="nvarchar(max)" />
+          <Property Name="description" Type="nvarchar(max)" />
+          <Property Name="price" Type="decimal" Precision="10" Scale="2" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Roles">
+          <Key>
+            <PropertyRef Name="id_role" />
+          </Key>
+          <Property Name="id_role" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="role_name" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ShoesAreas">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name_area" Type="nvarchar" MaxLength="80" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Sizes">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="num_size" Type="decimal" Precision="8" Scale="2" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Sizes_Of_Product">
+          <Key>
+            <PropertyRef Name="id_product" />
+            <PropertyRef Name="id_size" />
+          </Key>
+          <Property Name="id_product" Type="int" Nullable="false" />
+          <Property Name="id_size" Type="int" Nullable="false" />
+          <Property Name="amount" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Structure">
+          <Key>
+            <PropertyRef Name="id_product" />
+            <PropertyRef Name="id_material" />
+            <PropertyRef Name="id_area" />
+          </Key>
+          <Property Name="id_product" Type="int" Nullable="false" />
+          <Property Name="id_material" Type="int" Nullable="false" />
+          <Property Name="id_area" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Subcategories">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="subcategory_name" Type="nvarchar" MaxLength="80" Nullable="false" />
+          <Property Name="category" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="principal_id" Type="int" Nullable="false" />
+          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="version" Type="int" />
+          <Property Name="definition" Type="varbinary(max)" />
+        </EntityType>
+        <EntityType Name="Users">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="login" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="first_name" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="middle_name" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="last_name" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="role" Type="int" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_OP_Orders">
+          <End Role="Orders" Type="Self.Orders" Multiplicity="1" />
+          <End Role="Order_Positions" Type="Self.Order_Positions" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Orders">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Order_Positions">
+              <PropertyRef Name="id_order" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_OP_Sizes_Of_Product">
+          <End Role="Sizes_Of_Product" Type="Self.Sizes_Of_Product" Multiplicity="1" />
+          <End Role="Order_Positions" Type="Self.Order_Positions" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Sizes_Of_Product">
+              <PropertyRef Name="id_product" />
+              <PropertyRef Name="id_size" />
+            </Principal>
+            <Dependent Role="Order_Positions">
+              <PropertyRef Name="id_product" />
+              <PropertyRef Name="id_size" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Orders_Users">
+          <End Role="Users" Type="Self.Users" Multiplicity="1" />
+          <End Role="Orders" Type="Self.Orders" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Orders">
+              <PropertyRef Name="client" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Products_Categories">
+          <End Role="Categories" Type="Self.Categories" Multiplicity="1" />
+          <End Role="Products" Type="Self.Products" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Categories">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Products">
+              <PropertyRef Name="category" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Products_Productions">
+          <End Role="Productions" Type="Self.Productions" Multiplicity="1" />
+          <End Role="Products" Type="Self.Products" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Productions">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Products">
+              <PropertyRef Name="production" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SoP_Products">
+          <End Role="Products" Type="Self.Products" Multiplicity="1" />
+          <End Role="Sizes_Of_Product" Type="Self.Sizes_Of_Product" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Products">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Sizes_Of_Product">
+              <PropertyRef Name="id_product" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SoP_Sizes">
+          <End Role="Sizes" Type="Self.Sizes" Multiplicity="1" />
+          <End Role="Sizes_Of_Product" Type="Self.Sizes_Of_Product" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Sizes">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Sizes_Of_Product">
+              <PropertyRef Name="id_size" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Structure_Materials">
+          <End Role="Materials" Type="Self.Materials" Multiplicity="1" />
+          <End Role="Structure" Type="Self.Structure" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Materials">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Structure">
+              <PropertyRef Name="id_material" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Structure_Products">
+          <End Role="Products" Type="Self.Products" Multiplicity="1" />
+          <End Role="Structure" Type="Self.Structure" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Products">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Structure">
+              <PropertyRef Name="id_product" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Structure_ShoesAreas">
+          <End Role="ShoesAreas" Type="Self.ShoesAreas" Multiplicity="1" />
+          <End Role="Structure" Type="Self.Structure" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ShoesAreas">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Structure">
+              <PropertyRef Name="id_area" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Subcategories_Categories">
+          <End Role="Categories" Type="Self.Categories" Multiplicity="1" />
+          <End Role="Subcategories" Type="Self.Subcategories" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Categories">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Subcategories">
+              <PropertyRef Name="category" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Users_Roles">
+          <End Role="Roles" Type="Self.Roles" Multiplicity="1" />
+          <End Role="Users" Type="Self.Users" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Roles">
+              <PropertyRef Name="id_role" />
+            </Principal>
+            <Dependent Role="Users">
+              <PropertyRef Name="role" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Хранилище ShoesShopModelContainer">
+          <EntitySet Name="Categories" EntityType="Self.Categories" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Materials" EntityType="Self.Materials" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Order_Positions" EntityType="Self.Order_Positions" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Orders" EntityType="Self.Orders" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Productions" EntityType="Self.Productions" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Products" EntityType="Self.Products" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Roles" EntityType="Self.Roles" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ShoesAreas" EntityType="Self.ShoesAreas" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Sizes" EntityType="Self.Sizes" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Sizes_Of_Product" EntityType="Self.Sizes_Of_Product" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Structure" EntityType="Self.Structure" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Subcategories" EntityType="Self.Subcategories" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_OP_Orders" Association="Self.FK_OP_Orders">
+            <End Role="Orders" EntitySet="Orders" />
+            <End Role="Order_Positions" EntitySet="Order_Positions" />
+          </AssociationSet>
+          <AssociationSet Name="FK_OP_Sizes_Of_Product" Association="Self.FK_OP_Sizes_Of_Product">
+            <End Role="Sizes_Of_Product" EntitySet="Sizes_Of_Product" />
+            <End Role="Order_Positions" EntitySet="Order_Positions" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Orders_Users" Association="Self.FK_Orders_Users">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Orders" EntitySet="Orders" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Products_Categories" Association="Self.FK_Products_Categories">
+            <End Role="Categories" EntitySet="Categories" />
+            <End Role="Products" EntitySet="Products" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Products_Productions" Association="Self.FK_Products_Productions">
+            <End Role="Productions" EntitySet="Productions" />
+            <End Role="Products" EntitySet="Products" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SoP_Products" Association="Self.FK_SoP_Products">
+            <End Role="Products" EntitySet="Products" />
+            <End Role="Sizes_Of_Product" EntitySet="Sizes_Of_Product" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SoP_Sizes" Association="Self.FK_SoP_Sizes">
+            <End Role="Sizes" EntitySet="Sizes" />
+            <End Role="Sizes_Of_Product" EntitySet="Sizes_Of_Product" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Structure_Materials" Association="Self.FK_Structure_Materials">
+            <End Role="Materials" EntitySet="Materials" />
+            <End Role="Structure" EntitySet="Structure" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Structure_Products" Association="Self.FK_Structure_Products">
+            <End Role="Products" EntitySet="Products" />
+            <End Role="Structure" EntitySet="Structure" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Structure_ShoesAreas" Association="Self.FK_Structure_ShoesAreas">
+            <End Role="ShoesAreas" EntitySet="ShoesAreas" />
+            <End Role="Structure" EntitySet="Structure" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Subcategories_Categories" Association="Self.FK_Subcategories_Categories">
+            <End Role="Categories" EntitySet="Categories" />
+            <End Role="Subcategories" EntitySet="Subcategories" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Users_Roles" Association="Self.FK_Users_Roles">
+            <End Role="Roles" EntitySet="Roles" />
+            <End Role="Users" EntitySet="Users" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="ShoesShopModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="ShoesShopEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Categories" EntityType="ShoesShopModel.Category" />
+          <EntitySet Name="Materials" EntityType="ShoesShopModel.Material" />
+          <EntitySet Name="Order_Positions" EntityType="ShoesShopModel.Order_Positions" />
+          <EntitySet Name="Orders" EntityType="ShoesShopModel.Order" />
+          <EntitySet Name="Productions" EntityType="ShoesShopModel.Production" />
+          <EntitySet Name="Products" EntityType="ShoesShopModel.Product" />
+          <EntitySet Name="Roles" EntityType="ShoesShopModel.Role" />
+          <EntitySet Name="ShoesAreas" EntityType="ShoesShopModel.ShoesArea" />
+          <EntitySet Name="Sizes" EntityType="ShoesShopModel.Size" />
+          <EntitySet Name="Sizes_Of_Product" EntityType="ShoesShopModel.Sizes_Of_Product" />
+          <EntitySet Name="Structures" EntityType="ShoesShopModel.Structure" />
+          <EntitySet Name="Subcategories" EntityType="ShoesShopModel.Subcategory" />
+          <EntitySet Name="sysdiagrams" EntityType="ShoesShopModel.sysdiagram" />
+          <EntitySet Name="Users" EntityType="ShoesShopModel.User" />
+          <AssociationSet Name="FK_Products_Categories" Association="ShoesShopModel.FK_Products_Categories">
+            <End Role="Category" EntitySet="Categories" />
+            <End Role="Product" EntitySet="Products" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Subcategories_Categories" Association="ShoesShopModel.FK_Subcategories_Categories">
+            <End Role="Category" EntitySet="Categories" />
+            <End Role="Subcategory" EntitySet="Subcategories" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Structure_Materials" Association="ShoesShopModel.FK_Structure_Materials">
+            <End Role="Material" EntitySet="Materials" />
+            <End Role="Structure" EntitySet="Structures" />
+          </AssociationSet>
+          <AssociationSet Name="FK_OP_Orders" Association="ShoesShopModel.FK_OP_Orders">
+            <End Role="Order" EntitySet="Orders" />
+            <End Role="Order_Positions" EntitySet="Order_Positions" />
+          </AssociationSet>
+          <AssociationSet Name="FK_OP_Sizes_Of_Product" Association="ShoesShopModel.FK_OP_Sizes_Of_Product">
+            <End Role="Sizes_Of_Product" EntitySet="Sizes_Of_Product" />
+            <End Role="Order_Positions" EntitySet="Order_Positions" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Orders_Users" Association="ShoesShopModel.FK_Orders_Users">
+            <End Role="User" EntitySet="Users" />
+            <End Role="Order" EntitySet="Orders" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Products_Productions" Association="ShoesShopModel.FK_Products_Productions">
+            <End Role="Production" EntitySet="Productions" />
+            <End Role="Product" EntitySet="Products" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SoP_Products" Association="ShoesShopModel.FK_SoP_Products">
+            <End Role="Product" EntitySet="Products" />
+            <End Role="Sizes_Of_Product" EntitySet="Sizes_Of_Product" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Structure_Products" Association="ShoesShopModel.FK_Structure_Products">
+            <End Role="Product" EntitySet="Products" />
+            <End Role="Structure" EntitySet="Structures" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Users_Roles" Association="ShoesShopModel.FK_Users_Roles">
+            <End Role="Role" EntitySet="Roles" />
+            <End Role="User" EntitySet="Users" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Structure_ShoesAreas" Association="ShoesShopModel.FK_Structure_ShoesAreas">
+            <End Role="ShoesArea" EntitySet="ShoesAreas" />
+            <End Role="Structure" EntitySet="Structures" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SoP_Sizes" Association="ShoesShopModel.FK_SoP_Sizes">
+            <End Role="Size" EntitySet="Sizes" />
+            <End Role="Sizes_Of_Product" EntitySet="Sizes_Of_Product" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="Category">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="category_name" Type="String" Nullable="false" MaxLength="80" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Products" Relationship="ShoesShopModel.FK_Products_Categories" FromRole="Category" ToRole="Product" />
+          <NavigationProperty Name="Subcategories" Relationship="ShoesShopModel.FK_Subcategories_Categories" FromRole="Category" ToRole="Subcategory" />
+        </EntityType>
+        <EntityType Name="Material">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name_material" Type="String" Nullable="false" MaxLength="80" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Structures" Relationship="ShoesShopModel.FK_Structure_Materials" FromRole="Material" ToRole="Structure" />
+        </EntityType>
+        <EntityType Name="Order_Positions">
+          <Key>
+            <PropertyRef Name="id_order" />
+            <PropertyRef Name="id_product" />
+            <PropertyRef Name="id_size" />
+          </Key>
+          <Property Name="id_order" Type="Int32" Nullable="false" />
+          <Property Name="id_product" Type="Int32" Nullable="false" />
+          <Property Name="id_size" Type="Int32" Nullable="false" />
+          <Property Name="amount" Type="Int32" Nullable="false" />
+          <Property Name="price_per_unit" Type="Decimal" Nullable="false" Precision="10" Scale="2" />
+          <NavigationProperty Name="Order" Relationship="ShoesShopModel.FK_OP_Orders" FromRole="Order_Positions" ToRole="Order" />
+          <NavigationProperty Name="Sizes_Of_Product" Relationship="ShoesShopModel.FK_OP_Sizes_Of_Product" FromRole="Order_Positions" ToRole="Sizes_Of_Product" />
+        </EntityType>
+        <EntityType Name="Order">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="date_order" Type="DateTime" Precision="3" />
+          <Property Name="client" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Order_Positions" Relationship="ShoesShopModel.FK_OP_Orders" FromRole="Order" ToRole="Order_Positions" />
+          <NavigationProperty Name="User" Relationship="ShoesShopModel.FK_Orders_Users" FromRole="Order" ToRole="User" />
+        </EntityType>
+        <EntityType Name="Production">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name_production" Type="String" Nullable="false" MaxLength="80" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Products" Relationship="ShoesShopModel.FK_Products_Productions" FromRole="Production" ToRole="Product" />
+        </EntityType>
+        <EntityType Name="Product">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="category" Type="Int32" Nullable="false" />
+          <Property Name="production" Type="Int32" Nullable="false" />
+          <Property Name="product_name" Type="String" Nullable="false" MaxLength="120" FixedLength="false" Unicode="true" />
+          <Property Name="product_image" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="price" Type="Decimal" Nullable="false" Precision="10" Scale="2" />
+          <NavigationProperty Name="Category1" Relationship="ShoesShopModel.FK_Products_Categories" FromRole="Product" ToRole="Category" />
+          <NavigationProperty Name="Production1" Relationship="ShoesShopModel.FK_Products_Productions" FromRole="Product" ToRole="Production" />
+          <NavigationProperty Name="Sizes_Of_Product" Relationship="ShoesShopModel.FK_SoP_Products" FromRole="Product" ToRole="Sizes_Of_Product" />
+          <NavigationProperty Name="Structures" Relationship="ShoesShopModel.FK_Structure_Products" FromRole="Product" ToRole="Structure" />
+        </EntityType>
+        <EntityType Name="Role">
+          <Key>
+            <PropertyRef Name="id_role" />
+          </Key>
+          <Property Name="id_role" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="role_name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Users" Relationship="ShoesShopModel.FK_Users_Roles" FromRole="Role" ToRole="User" />
+        </EntityType>
+        <EntityType Name="ShoesArea">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name_area" Type="String" Nullable="false" MaxLength="80" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Structures" Relationship="ShoesShopModel.FK_Structure_ShoesAreas" FromRole="ShoesArea" ToRole="Structure" />
+        </EntityType>
+        <EntityType Name="Size">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="num_size" Type="Decimal" Nullable="false" Precision="8" Scale="2" />
+          <NavigationProperty Name="Sizes_Of_Product" Relationship="ShoesShopModel.FK_SoP_Sizes" FromRole="Size" ToRole="Sizes_Of_Product" />
+        </EntityType>
+        <EntityType Name="Sizes_Of_Product">
+          <Key>
+            <PropertyRef Name="id_product" />
+            <PropertyRef Name="id_size" />
+          </Key>
+          <Property Name="id_product" Type="Int32" Nullable="false" />
+          <Property Name="id_size" Type="Int32" Nullable="false" />
+          <Property Name="amount" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Order_Positions" Relationship="ShoesShopModel.FK_OP_Sizes_Of_Product" FromRole="Sizes_Of_Product" ToRole="Order_Positions" />
+          <NavigationProperty Name="Product" Relationship="ShoesShopModel.FK_SoP_Products" FromRole="Sizes_Of_Product" ToRole="Product" />
+          <NavigationProperty Name="Size" Relationship="ShoesShopModel.FK_SoP_Sizes" FromRole="Sizes_Of_Product" ToRole="Size" />
+        </EntityType>
+        <EntityType Name="Structure">
+          <Key>
+            <PropertyRef Name="id_product" />
+            <PropertyRef Name="id_material" />
+            <PropertyRef Name="id_area" />
+          </Key>
+          <Property Name="id_product" Type="Int32" Nullable="false" />
+          <Property Name="id_material" Type="Int32" Nullable="false" />
+          <Property Name="id_area" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Material" Relationship="ShoesShopModel.FK_Structure_Materials" FromRole="Structure" ToRole="Material" />
+          <NavigationProperty Name="Product" Relationship="ShoesShopModel.FK_Structure_Products" FromRole="Structure" ToRole="Product" />
+          <NavigationProperty Name="ShoesArea" Relationship="ShoesShopModel.FK_Structure_ShoesAreas" FromRole="Structure" ToRole="ShoesArea" />
+        </EntityType>
+        <EntityType Name="Subcategory">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="subcategory_name" Type="String" Nullable="false" MaxLength="80" FixedLength="false" Unicode="true" />
+          <Property Name="category" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Category1" Relationship="ShoesShopModel.FK_Subcategories_Categories" FromRole="Subcategory" ToRole="Category" />
+        </EntityType>
+        <EntityType Name="sysdiagram">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="principal_id" Type="Int32" Nullable="false" />
+          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="version" Type="Int32" />
+          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="login" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="first_name" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="middle_name" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="last_name" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="role" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Orders" Relationship="ShoesShopModel.FK_Orders_Users" FromRole="User" ToRole="Order" />
+          <NavigationProperty Name="Role1" Relationship="ShoesShopModel.FK_Users_Roles" FromRole="User" ToRole="Role" />
+        </EntityType>
+        <Association Name="FK_Products_Categories">
+          <End Type="ShoesShopModel.Category" Role="Category" Multiplicity="1" />
+          <End Type="ShoesShopModel.Product" Role="Product" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Category">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Product">
+              <PropertyRef Name="category" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Subcategories_Categories">
+          <End Type="ShoesShopModel.Category" Role="Category" Multiplicity="1" />
+          <End Type="ShoesShopModel.Subcategory" Role="Subcategory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Category">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Subcategory">
+              <PropertyRef Name="category" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Structure_Materials">
+          <End Type="ShoesShopModel.Material" Role="Material" Multiplicity="1" />
+          <End Type="ShoesShopModel.Structure" Role="Structure" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Material">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Structure">
+              <PropertyRef Name="id_material" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_OP_Orders">
+          <End Type="ShoesShopModel.Order" Role="Order" Multiplicity="1" />
+          <End Type="ShoesShopModel.Order_Positions" Role="Order_Positions" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Order">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Order_Positions">
+              <PropertyRef Name="id_order" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_OP_Sizes_Of_Product">
+          <End Type="ShoesShopModel.Sizes_Of_Product" Role="Sizes_Of_Product" Multiplicity="1" />
+          <End Type="ShoesShopModel.Order_Positions" Role="Order_Positions" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Sizes_Of_Product">
+              <PropertyRef Name="id_product" />
+              <PropertyRef Name="id_size" />
+            </Principal>
+            <Dependent Role="Order_Positions">
+              <PropertyRef Name="id_product" />
+              <PropertyRef Name="id_size" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Orders_Users">
+          <End Type="ShoesShopModel.User" Role="User" Multiplicity="1" />
+          <End Type="ShoesShopModel.Order" Role="Order" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Order">
+              <PropertyRef Name="client" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Products_Productions">
+          <End Type="ShoesShopModel.Production" Role="Production" Multiplicity="1" />
+          <End Type="ShoesShopModel.Product" Role="Product" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Production">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Product">
+              <PropertyRef Name="production" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SoP_Products">
+          <End Type="ShoesShopModel.Product" Role="Product" Multiplicity="1" />
+          <End Type="ShoesShopModel.Sizes_Of_Product" Role="Sizes_Of_Product" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Product">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Sizes_Of_Product">
+              <PropertyRef Name="id_product" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Structure_Products">
+          <End Type="ShoesShopModel.Product" Role="Product" Multiplicity="1" />
+          <End Type="ShoesShopModel.Structure" Role="Structure" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Product">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Structure">
+              <PropertyRef Name="id_product" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Users_Roles">
+          <End Type="ShoesShopModel.Role" Role="Role" Multiplicity="1" />
+          <End Type="ShoesShopModel.User" Role="User" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Role">
+              <PropertyRef Name="id_role" />
+            </Principal>
+            <Dependent Role="User">
+              <PropertyRef Name="role" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Structure_ShoesAreas">
+          <End Type="ShoesShopModel.ShoesArea" Role="ShoesArea" Multiplicity="1" />
+          <End Type="ShoesShopModel.Structure" Role="Structure" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ShoesArea">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Structure">
+              <PropertyRef Name="id_area" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SoP_Sizes">
+          <End Type="ShoesShopModel.Size" Role="Size" Multiplicity="1" />
+          <End Type="ShoesShopModel.Sizes_Of_Product" Role="Sizes_Of_Product" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Size">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Sizes_Of_Product">
+              <PropertyRef Name="id_size" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="Хранилище ShoesShopModelContainer" CdmEntityContainer="ShoesShopEntities">
+          <EntitySetMapping Name="Categories">
+            <EntityTypeMapping TypeName="ShoesShopModel.Category">
+              <MappingFragment StoreEntitySet="Categories">
+                <ScalarProperty Name="category_name" ColumnName="category_name" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Materials">
+            <EntityTypeMapping TypeName="ShoesShopModel.Material">
+              <MappingFragment StoreEntitySet="Materials">
+                <ScalarProperty Name="name_material" ColumnName="name_material" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Order_Positions">
+            <EntityTypeMapping TypeName="ShoesShopModel.Order_Positions">
+              <MappingFragment StoreEntitySet="Order_Positions">
+                <ScalarProperty Name="price_per_unit" ColumnName="price_per_unit" />
+                <ScalarProperty Name="amount" ColumnName="amount" />
+                <ScalarProperty Name="id_size" ColumnName="id_size" />
+                <ScalarProperty Name="id_product" ColumnName="id_product" />
+                <ScalarProperty Name="id_order" ColumnName="id_order" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Orders">
+            <EntityTypeMapping TypeName="ShoesShopModel.Order">
+              <MappingFragment StoreEntitySet="Orders">
+                <ScalarProperty Name="client" ColumnName="client" />
+                <ScalarProperty Name="date_order" ColumnName="date_order" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Productions">
+            <EntityTypeMapping TypeName="ShoesShopModel.Production">
+              <MappingFragment StoreEntitySet="Productions">
+                <ScalarProperty Name="name_production" ColumnName="name_production" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Products">
+            <EntityTypeMapping TypeName="ShoesShopModel.Product">
+              <MappingFragment StoreEntitySet="Products">
+                <ScalarProperty Name="price" ColumnName="price" />
+                <ScalarProperty Name="description" ColumnName="description" />
+                <ScalarProperty Name="product_image" ColumnName="product_image" />
+                <ScalarProperty Name="product_name" ColumnName="product_name" />
+                <ScalarProperty Name="production" ColumnName="production" />
+                <ScalarProperty Name="category" ColumnName="category" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Roles">
+            <EntityTypeMapping TypeName="ShoesShopModel.Role">
+              <MappingFragment StoreEntitySet="Roles">
+                <ScalarProperty Name="role_name" ColumnName="role_name" />
+                <ScalarProperty Name="id_role" ColumnName="id_role" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ShoesAreas">
+            <EntityTypeMapping TypeName="ShoesShopModel.ShoesArea">
+              <MappingFragment StoreEntitySet="ShoesAreas">
+                <ScalarProperty Name="name_area" ColumnName="name_area" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Sizes">
+            <EntityTypeMapping TypeName="ShoesShopModel.Size">
+              <MappingFragment StoreEntitySet="Sizes">
+                <ScalarProperty Name="num_size" ColumnName="num_size" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Sizes_Of_Product">
+            <EntityTypeMapping TypeName="ShoesShopModel.Sizes_Of_Product">
+              <MappingFragment StoreEntitySet="Sizes_Of_Product">
+                <ScalarProperty Name="amount" ColumnName="amount" />
+                <ScalarProperty Name="id_size" ColumnName="id_size" />
+                <ScalarProperty Name="id_product" ColumnName="id_product" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Structures">
+            <EntityTypeMapping TypeName="ShoesShopModel.Structure">
+              <MappingFragment StoreEntitySet="Structure">
+                <ScalarProperty Name="id_area" ColumnName="id_area" />
+                <ScalarProperty Name="id_material" ColumnName="id_material" />
+                <ScalarProperty Name="id_product" ColumnName="id_product" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Subcategories">
+            <EntityTypeMapping TypeName="ShoesShopModel.Subcategory">
+              <MappingFragment StoreEntitySet="Subcategories">
+                <ScalarProperty Name="category" ColumnName="category" />
+                <ScalarProperty Name="subcategory_name" ColumnName="subcategory_name" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="sysdiagrams">
+            <EntityTypeMapping TypeName="ShoesShopModel.sysdiagram">
+              <MappingFragment StoreEntitySet="sysdiagrams">
+                <ScalarProperty Name="definition" ColumnName="definition" />
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Users">
+            <EntityTypeMapping TypeName="ShoesShopModel.User">
+              <MappingFragment StoreEntitySet="Users">
+                <ScalarProperty Name="role" ColumnName="role" />
+                <ScalarProperty Name="last_name" ColumnName="last_name" />
+                <ScalarProperty Name="middle_name" ColumnName="middle_name" />
+                <ScalarProperty Name="first_name" ColumnName="first_name" />
+                <ScalarProperty Name="login" ColumnName="login" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Нет" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
